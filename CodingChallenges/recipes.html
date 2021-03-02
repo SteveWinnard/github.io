@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Recipe Database</title>
+	<script src="https://kit.fontawesome.com/b95714529c.js" crossorigin="anonymous"></script>
+	<script type="text/javscript" src="recipes.js"></script>
+	<link rel="stylesheet" type="text/css" href="recipes.css">
+	
+</head>
+<body>
+	<div class="container">
+		<div class="title">
+			<div class="menu clickable"><i class="fas fa-bars"></i></div>
+			<div class="heading">eRecipes</div>
+			<div class="search clickable" onClick="showSearch()"><i class="fas fa-search"></i></div>
+			<div class="searchbox visible">
+				<div class="searchtext" contenteditable="true"></div>
+			</div>
+
+		</div>
+			<!--the content will be generated procedurally -->
+		<div class="groups">
+			<ul id="faves">	
+				<!--the content will be generated procedurally -->				
+			</ul>
+		</div>
+
+		<div class="main">
+			<div class="personalise">
+				<div class="top">
+					<div class="text">Personalise</div>
+					<div class="close clickable"><i class="fas fa-times"></i></div>
+				</div>
+				<div class="bottom">
+					<p>Your recommendations</p>
+					<div class="button clickable">Start Personalising</div>
+				</div>
+			</div>
+			<div class="recipes">
+				<!--the content will be generated procedurally -->
+			</div>
+		</div>
+	</div>
+	
+	<div class="recipe-card visible">
+		<div class="recipe-card-main">
+			<!--the content will be generated procedurally -->
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		console.log("Hello");
+		var theRecipeImage 	= document.getElementById("image");
+		var theRecipeTitle 	= document.querySelector(".recipe-title");
+		var theRecipes	 	= document.querySelector(".recipes");
+		var theRecipecard 	= document.querySelector(".recipe-card");
+		var theSearch	 	= document.querySelector(".searchbox");
+
+
+		async function getMeal(id, search){
+			//no params = random
+			//1 param = search by id
+			//2 params = search by term
+			let URL;
+
+			if (id==undefined){URL = "https://www.themealdb.com/api/json/v1/1/random.php"};
+			if (id!=undefined){URL = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=" + id};
+			if (search){URL = "https://www.themealdb.com/api/json/v1/1/search.php?s=" + id};
+
+			const resp = await fetch(URL);
+			const theJSON = await resp.json();
+
+			//writeMeal(theJSON.meals[0]);
+			//console.log (theJSON.meals[0])
+			return theJSON;
+		}
+
+		function showFavourite(meal){
+			theRecipes.innerHTML="";
+			writeMeal(meal);
+		}
+
+		function showSearch(){
+			theSearch.classList.remove("visible");
+			theSearch.childNodes[1].innerText = "";
+			theSearch.childNodes[1].focus();
+			theSearch.addEventListener('keydown', async function(event){
+				console.log("Key:", event.keyCode);
+				switch(event.keyCode){
+				case(27):
+					theSearch.classList.add("visible");
+					break;
+				case(13):
+					event.preventDefault();
+					event.stopPropagation();
+					let theText = theSearch.childNodes[1].innerText;
+					if (theText.length > 0){
+
+						let searchMeals = await getMeal(theText, true);
+						theRecipes.innerHTML="";	//clear out the current list
+						for (m=0; m < searchMeals.meals.length; m++){
+							writeMeal(`${searchMeals.meals[m].idMeal}`)
+						}
+						
+					}
+				}
+
+			})
+		}
+
+		async function writeMeal(meal){
+			//console.log(json.strMealThumb);
+			let json 		= await getMeal(meal);
+			let theMealHTML = `<div class="recipe">
+				<div class="image"><img src="${json.meals[0].strMealThumb}" id="image" onclick='showRecipe(${json.meals[0].idMeal})'><p>Recipe of the day</p></div>
+				<div class="recipe-title" recipe_id="${json.meals[0].idMeal}">${json.meals[0].strMeal}</div>
+				<div class="rating clickable" onClick="addToFavourites(${json.meals[0].idMeal});"><i class="fas fa-heart" ></i></div>
+
+			</div>`
+			theRecipes.innerHTML+=theMealHTML;
+		}
+
+		async function showRecipe(meal){
+			var theRecipecard 	= document.querySelector(".recipe-card");
+
+			let json = await getMeal(meal);
+
+			//crreate our ingrecients list
+			let theIngredients = "";
+			//console.log(json.meals[0].getOwnPropertyNames())
+
+
+			for (var i=1; i < 21; i++){
+
+				//for (var key in json.meals[0]) {
+				    if (json.meals[0]["strIngredient" + i] .length > 0) {
+				        theIngredients += "<p>" + json.meals[0]["strMeasure" + i] + " " + json.meals[0]["strIngredient" + i] + "</p>";
+				    }
+				//}
+
+				/*if ((json.meals[0].).length > 0){
+					theIngredients+= (json.meals[0].strIngredient + i) + " - " + (json.meals[0].strMeasure + i)
+				}*/
+			}
+
+			//create our HTML
+			theMealHTML = `
+			<div class="photo"><img src='${json.meals[0].strMealThumb}'></img><div class="title">${json.meals[0].strMeal}</div></div>
+			<div onClick='closeRecipe();' class="close clickable"><i class="fas fa-times"></i></div>
+			
+			<div class="ingredients box">Ingredients:<p>${theIngredients}</p></div>
+			<div class="instructions box">Directions:<p>${json.meals[0].strInstructions}</p></div>`
+			
+			theRecipecard.childNodes[1].innerHTML = theMealHTML
+			theRecipecard.classList.remove("visible");
+
+		}
+
+		function closeRecipe(){
+			theRecipecard.classList.add("visible");
+		}
+
+		function addToFavourites(theID){
+			//let theID = theRecipeTitle.recipe_id;
+			if (theID!=""){
+				console.log("The ID", theID);
+
+				let theFaves = getFavourites();
+				if (theFaves.indexOf(String(theID))== -1){
+					saveToFavourites(theID);
+				}
+				else{
+					removeFromFavourites(theID);
+				}
+				showFavourites(getFavourites());				
+			}
+		}
+
+		function saveToFavourites(id){
+			sessionStorage.setItem("favourites", sessionStorage.getItem("favourites") + id +  "|");
+			console.log("Faves", sessionStorage.getItem("favourites"));
+		}
+
+		function removeFromFavourites(id){
+			let theFaves = sessionStorage.getItem("favourites");
+			theFaves = theFaves.replace(id +  "|", "")
+			sessionStorage.setItem("favourites",  theFaves);
+		}
+
+		function getFavourites(){
+			let theFaves = sessionStorage.getItem("favourites");
+			try{
+				theFaves = theFaves.split("|");
+			}
+			catch(e){
+				theFaves = [];
+				sessionStorage.setItem("favourites", "");
+
+			}
+
+			console.log(theFaves);
+			return theFaves;
+		}
+
+		async function showFavourites(faveList){
+			//iterate through our faves adding them to our group DIV
+			let theFaves = document.getElementById("faves");
+			theFaves.innerHTML = "";
+
+			for (let f=0; f < faveList.length -1; f++){
+				//get our favourite, then update the HTML and append to our parent node
+				let theFave = await getMeal(faveList[f]);
+				let theNode = document.createElement("LI");
+				let theSpan = document.createElement("SPAN");
+				console.log(theFave.meals[0]);
+				theFaves.appendChild(theNode);
+				theNode.classList.add("group");
+				theNode.style.background = "url(" + theFave.meals[0].strMealThumb  + ")"
+				theNode.style.backgroundSize = "cover";
+				theNode.style.cursor = "pointer";
+				theNode.addEventListener("click", function(){showFavourite(`${theFave.meals[0].idMeal}`)});
+				theNode.appendChild(theSpan);
+				theSpan.innerText = theFave.meals[0].strCategory;
+
+				console.log("Fave " + f, theFave.meals[0].idMeal);
+			}
+
+		}
+		showFavourites(getFavourites());
+		
+		writeMeal();
+		
+	</script>
+</body>
+</html>

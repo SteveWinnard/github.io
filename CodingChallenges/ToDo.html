@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ToDo</title>
+	<link rel="stylesheet" type="text/css" href="ToDo.css">
+	<script src="https://kit.fontawesome.com/b95714529c.js" crossorigin="anonymous"></script>
+</head>
+<body>
+	<div class="todo">
+		<div class="header">
+			<div class="newtodo" contenteditable="true"></div>
+		</div>
+		<div class="body">
+			<!--this will be created programatically-->
+		</div>
+		<div class="footer">
+			<div class="todolist"></div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		let theNewTodo = document.querySelector(".newtodo")
+		theNewTodo.addEventListener("keypress", function(event){
+			
+
+			switch (event.charCode){
+				case(27):
+					break;
+				case(13):
+					event.preventDefault();
+					event.stopPropagation();
+					saveToDo(this.innerText, "T" + Date.now());
+					this.innerText = "";
+					 writeToDos();
+					break;
+
+			}
+
+		})
+
+		function saveToDo(todo, id){
+
+			let theToDos = getToDos();
+
+			//check if our note already exists
+			if (theToDos.indexOf(id) > -1) {
+				alert("ToDo alread saved.")
+			}
+			else{
+				let theNoteBody = todo; //document.getElementById(id);
+				//let theNotesJSON = {'id': id, 'value': theNoteBody.childNodes[3].innerHTML};
+				let todos = {'id': id, 'value': theNoteBody, 'date': Date.now(), 'complete': false};
+				//theNewNote = JSON.parse(theNewNote);
+				theToDos = JSON.parse(theToDos);
+				theToDos.todos[theToDos.todos.length] = todos;
+				if (typeof(theToDos)=="object"){theToDos = JSON.stringify(theToDos)}
+			
+				sessionStorage.setItem("todos", theToDos);
+				//writeNotes();
+			}
+
+		}
+
+		function getToDos(){
+			let newToDo = {"todos": []};
+			let theToDos = sessionStorage.getItem("todos") == null ? JSON.stringify(newToDo) : sessionStorage.getItem("todos");
+			return theToDos;
+		}
+
+
+		function writeToDos(){
+			let theToDoBody = document.querySelector(".body");
+			let theToDos = JSON.parse(getToDos());
+			theToDoBody.innerHTML = "";
+
+			for (var t=0; t < theToDos.todos.length; t++){
+				let theToDoHTML = `<div class="todoitem" >
+					<div id="${theToDos.todos[t].id}" class="todocomplete"><input onClick="completeToDo('${theToDos.todos[t].id}')" type="checkbox" ${theToDos.todos[t].complete==false ? "" : "checked" }></input></div>
+					<div class="todoname ${theToDos.todos[t].complete==false ? "" : "complete" }">${theToDos.todos[t].value}</div>
+					<div class="tododelete" onClick="deleteToDo('${theToDos.todos[t].id}')"><i class="fas fa-times"></i></div>
+				</div>`
+
+				theToDoBody.innerHTML+=theToDoHTML;
+				//if (theToDos.todos[t].complete!=false){completeToDo(theToDos.todos[t].id)};
+			}
+
+		}
+
+		function deleteToDo(id){
+			let theToDos = JSON.parse(getToDos());
+			//theNotes = JSON.parse(theNotes);
+			for (d=0; d < theToDos.todos.length; d++){
+				if (theToDos.todos[d].id==id){
+					theToDos.todos.splice(d, 1);
+					theToDos = JSON.stringify(theToDos);
+					sessionStorage.setItem("todos", theToDos);
+					writeToDos();
+					break;
+				}
+
+			}
+		}
+
+		function completeToDo(id){
+			console.log("ID", id);
+			let theComplete = document.getElementById(id);
+			theComplete.childNodes[0].checked = true;	
+			if (!theComplete.nextElementSibling.classList.contains("complete")){
+				theComplete.nextElementSibling.classList.add("complete");
+			}
+			
+			let theToDos = JSON.parse(getToDos());
+			for (d=0; d < theToDos.todos.length; d++){
+				if (theToDos.todos[d].id==id){
+					theToDos.todos[d].complete = true;
+					theToDos.todos[d].datecomplete = Date.now();
+					theToDos = JSON.stringify(theToDos);
+					sessionStorage.setItem("todos", theToDos);
+					//writeToDos();
+					break;
+				}
+
+			}
+
+		}
+
+		 writeToDos();
+	</script>
+</body>
+</html>

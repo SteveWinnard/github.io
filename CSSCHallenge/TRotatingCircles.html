@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Challenge 1</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+
+		body{
+			background: #1a4341;
+		}
+
+		div{
+			position:fixed;
+			left: 50%;
+			top: 50%;
+			
+			
+
+			
+			
+		}
+
+
+
+		.inner {
+
+		    width: 500px;
+		    height: 500px;
+		    border: 40px solid #fff;
+		    border-color: #fff transparent transparent transparent ;
+		    border-radius: 50% 50% 50% 50%;
+			z-index:40;
+			transform: translate(-50%, -50%);
+			animation: rotateRight;
+			animation-duration: 2s;
+			animation-timing-function: ease-in;
+			animation-fill-mode: forwards;
+			animation-iteration-count: infinite;
+			transform-origin: top left;
+			filter: drop-shadow(0px 0px 20px yellow);
+
+			
+		}
+
+
+		@keyframes rotateRight {
+			0%{transform: rotate(0deg) translate(-50%, -50%);;}
+
+			100%{transform: rotate(360deg) translate(-50%, -50%);}
+
+		}
+
+		.outer{
+
+		    width: 360px;
+		    height: 360px;
+		    border: 40px solid #555;
+		    border-color: transparent transparent #555  transparent ;
+		    border-radius: 50% 50% 50% 50%;
+			z-index:40;
+			transform: translate(-50%, -50%);
+			animation: rotateLeft;
+			animation-duration: 1.5s;
+			animation-timing-function: ease-out; 
+			animation-fill-mode: forwards;
+			animation-iteration-count: infinite;
+			transform-origin: top left;
+			filter: drop-shadow(0px 0px 20px green);
+			
+		}
+		
+		@keyframes rotateLeft {
+			0%{transform: rotate(0deg) translate(-50%, -50%);;}
+
+			100%{transform: rotate(-360deg) translate(-50%, -50%);}
+
+		}
+
+
+		.middle{
+
+		    width: 160px;
+		    height: 160px;
+		    border: 40px solid #987;
+		    border-color: transparent transparent   transparent #66F ;
+		    border-radius: 50% 50% 50% 50%;
+			z-index:40;
+			transform: translate(-50%, -50%);
+			animation: rotateLeft;
+			animation-duration: 2.5s;
+			animation-timing-function: ease-in-out;
+			animation-fill-mode: forwards;
+			animation-iteration-count: infinite;
+			transform-origin: top left;
+		    filter: drop-shadow(0px 0px 20px lightblue);
+					
+		}
+
+		.bolt{
+
+		    width: 100px;
+		    height: 100px;
+		    border: 6px solid #222;
+			z-index:40;
+			transform: translate(-50%, -50%);
+			animation: rotateRight;
+			animation-duration: 3s;
+			animation-timing-function: linear;
+			animation-fill-mode: forwards;
+			animation-iteration-count: infinite;
+			transform-origin: top left;
+			clip-path: polygon(26% 12%, 78% 12%, 94% 50%, 77% 88%, 24% 88%, 8% 50%);
+			background: #333;	
+			box-shadow: inset 0px 0px 20px #111;
+		}
+
+		.bolt:before{
+			content: '';
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+		    width: 96%;
+		    height: 96%;
+		    border: 3px solid #000;
+			clip-path: polygon(26% 12%, 78% 12%, 94% 50%, 77% 88%, 24% 88%, 8% 50%);
+			background: #555;	
+			box-shadow: inset 0px 0px 20px #111;
+		}
+
+		.bolt:after{
+			content: '';
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+		    width: 36%;
+		    height: 36%;
+		    border: 3px solid #000;
+			clip-path: polygon(26% 12%, 78% 12%, 94% 50%, 77% 88%, 24% 88%, 8% 50%);
+			background: #555;	
+			box-shadow: inset 0px 0px 20px #111;
+		}
+	</style>
+</head>
+<body>
+	<div class="inner"></div>
+	
+	<div class="outer"></div>
+	<div class="middle"></div>
+	<div class="bolt"></div>
+	
+	
+	
+
+</body>
+</html>

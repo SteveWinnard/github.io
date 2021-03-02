@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Notes</title>
+	<script src="https://kit.fontawesome.com/b95714529c.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" type="text/css" href="notes.css">
+</head>
+<body>
+	<div class="notes">
+		
+	</div>
+
+	<script type="text/javascript">
+		let theNotesBody = document.querySelector(".notes");
+
+		function writeNotes(){
+			let theNotes = getNotes();
+			theNotes = JSON.parse(theNotes);
+
+			theNotesBody.innerHTML = "";
+
+			if (theNotes.notes.length> 0){
+				for (let w=0; w < theNotes.notes.length; w++){
+					theNotesBody.innerHTML += writeNote(theNotes.notes[theNotes.notes.length - w -1].id,theNotes.notes[theNotes.notes.length - w -1].value, 100-w, w); 
+				}
+			}
+			else{
+				addNote();
+			}
+		}
+
+		function addNote(index, top){
+			let theNoteID = "N"+Date.now();
+			theNotesBody.innerHTML += writeNote(theNoteID,"Write note here...", 100, 0);
+		}
+		
+
+		function writeNote(theNoteID, theNote, index, top){
+			//figure out the scale
+			//passed = 0 -- 
+			//w(0) = 0    	1.0
+			//w(1) = 1		0.99
+			//w(2) = 2		0.98  
+			let scale = 1 - (top/9);
+			top = (top *34) - (top * top);
+
+			let theNoteHTML = `<div class="note" id="${theNoteID}" style="z-index:${index}; top:-${top}px; transform: scale(${scale})" onClick="showNote('${theNoteID}')"  >
+				<div class="header" >
+					<div class="menu"><i class="clickable fas fa-ellipsis-h"></i><i class="clickable fas fa-plus" onCLick="addNote()"></i></i><i class="clickable far fa-circle"></i></div>
+					<div class="close clickable" onClick="deleteNote('${theNoteID}')"><i class="fas fa-times"></i></div>
+				</div>
+				<div class="body" contenteditable="true" >${theNote}</div>
+				<div class="footer"><div class="button clickable" onClick="saveNote('${theNoteID}')">Save</div></div>
+			</div>`
+
+			return theNoteHTML;
+		}
+
+		function showNote(id){
+			let theNote = document.getElementById(id);
+			theNote.style.zIndex = 100;
+			theNote.style.transform = "scale(1)";
+			theNote.style.top = "0px";
+		}
+
+		function deleteNote(id){
+			let theNotes = getNotes();
+			theNotes = JSON.parse(theNotes);
+			for (d=0; d < theNotes.notes.length; d++){
+				if (theNotes.notes[d].id==id){
+					theNotes.notes.splice(d, 1);
+					theNotes = JSON.stringify(theNotes);
+					sessionStorage.setItem("notes", theNotes);
+					writeNotes();
+					break;
+				}
+
+			}
+		}
+
+		function saveNote(id){
+			let theNotes = getNotes();
+
+			//check if our note already exists
+			if (theNotes.indexOf(id) > -1) {
+				alert("Note alread saved.")
+			}
+			else{
+				let theNoteBody = document.getElementById(id);
+				//let theNotesJSON = {'id': id, 'value': theNoteBody.childNodes[3].innerHTML};
+				let notes = {'id': id, 'value': theNoteBody.childNodes[3].innerHTML, 'date': Date.now()};
+				//theNewNote = JSON.parse(theNewNote);
+				theNotes = JSON.parse(theNotes);
+				theNotes.notes[theNotes.notes.length] = notes;
+				if (typeof(theNotes)=="object"){theNotes = JSON.stringify(theNotes)}
+			
+				sessionStorage.setItem("notes", theNotes);
+				writeNotes();
+			}
+
+		}
+
+		function getNotes(){
+			let newNote = {"notes": []};
+			let theNotes = sessionStorage.getItem("notes") == null ? JSON.stringify(newNote) : sessionStorage.getItem("notes");
+			return theNotes;
+		}
+
+		writeNotes();
+
+	</script>
+</body>
+</html>

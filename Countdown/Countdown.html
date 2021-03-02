@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Countdown</title>
+
+	<style type="text/css">
+		@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');
+		*{
+			margin:0px;
+			padding: 0px;
+
+		}
+
+		.container{
+			position: fixed;
+			left:50%;
+			top: 50%;
+			height: 100px;
+			width: 400px;
+			transform: translate(-50%, -50%);
+			display: flex;	
+
+
+		}
+
+		div {
+			justify-content: center;
+			align-items: center;
+			font-family: 'Roboto Mono';
+			font-size: 140px;
+			font-weight: 600;
+			color:#000;
+			margin: 10px;
+			
+		}
+
+		.days{
+			height: 200px;
+			background: rgba(0,122,0, .2);
+		}
+
+		.hours{
+			height: 200px;
+			background: rgba(0,0,122, .2);
+		}
+
+
+
+		.days:after{
+			content: 'days';
+			position: relative;
+			bottom:-20px;
+			left: -50%;
+			width:100%;
+			transform: translateX(-50%);
+			font-size: 20px;
+		}
+
+		.hours:after{
+			content: 'hours';
+			position: relative;
+			bottom:-20px;
+			left: -50%;
+			width:100%;
+			transform: translateX(-50%);
+			font-size: 20px;
+		}
+
+		.minutes:after{
+			content: 'minutes';
+			position: relative;
+			bottom:-20px;
+			left: -50%;
+			width:100%;
+			transform: translateX(-50%);
+			font-size: 20px;
+		}
+
+		.seconds:after{
+			content: 'seconds';
+			position: relative;
+			bottom:-20px;
+			left: -50%;
+			width:100%;
+			transform: translateX(-50%);
+			font-size: 20px;
+		}
+
+		
+
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="days">0</div>
+		<div class="hours">0</div>
+		<div class="minutes">0</div>
+		<div class="seconds">0</div>
+	</div>
+
+	<script type="text/javascript">
+		const theDays = document.querySelector(".days");
+		const theHours = document.querySelector(".hours");
+		const theMinutes = document.querySelector(".minutes");
+		const theSeconds = document.querySelector(".seconds");
+		const tgDate = "2/15/2021"
+		const targetDate = new Date(tgDate);
+		const theDate = new Date();
+		let difference =targetDate -  theDate ;//in milliseconds
+		
+
+
+		function calcDate(chunk){
+			
+
+			let seconds = difference / 1000 ;
+			let minutes = seconds / 60 ;
+			let hours = minutes / 60 ;
+			let days = hours / 24;
+
+			//days is accurate, now calc the remaining hours / minutes / seconds
+
+			hours 		= 24 * (days - (Math.floor(days)));		
+			minutes 	= 60 * (hours - Math.floor(hours));
+			seconds 	= 60 * (minutes - Math.floor(minutes));
+
+			days = Math.floor(days);
+			seconds = Math.floor(seconds);
+			//if (seconds==0){minutes--};
+			minutes = Math.floor(minutes);
+
+			theSeconds.innerText = seconds;
+			theMinutes.innerText = minutes;
+			theHours.innerText = Math.floor(hours);
+			theDays.innerText = days;
+
+			console.log("Days", days);
+			difference = difference - chunk;
+
+			setTimeout(function(){calcDate(1000)}, 1000);
+		}
+
+		calcDate(0);
+
+	</script>
+</body>
+</html>

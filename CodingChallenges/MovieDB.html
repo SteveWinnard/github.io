@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Movie DB</title>
+	<link rel="stylesheet" type="text/css" href="MovieDB.css">
+	<script src="https://kit.fontawesome.com/b95714529c.js" crossorigin="anonymous"></script>
+</head>
+<body>
+	<div class="container"></div>
+	<script type="text/javascript">
+		const MOVIE_API_KEY = "6b4ec3c787babdaa621bc48c7ac14cce";
+		//const MOVIE_API_URL = "https://api.themoviedb.org/3/search/movie?api_key=" + MOVIE_API_KEY + "&language=en-US&page=1&include_adult=false&query=";
+		const MOVIE_API_URL = "https://api.themoviedb.org/3/discover/movie?api_key=" + MOVIE_API_KEY + "&page=1";
+
+		async function searchMovies(term){
+			let theSearchURL = "https://api.themoviedb.org/3/movie/550?api_key=6b4ec3c787babdaa621bc48c7ac14cce" //MOVIE_API_URL+term;
+			console.log("URL", theSearchURL);
+			let theMovies = await fetch(theSearchURL);
+
+			console.log("Movies:", theMovies);
+
+		}
+
+		searchMovies("apes");
+
+	</script>
+</body>
+</html>

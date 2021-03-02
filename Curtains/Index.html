@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://kit.fontawesome.com/b95714529c.js" crossorigin="anonymous"></script>
+	<title>Curtains</title>
+	<link rel="stylesheet" type="text/css" href="curtains.css">
+</head>
+<body>
+	<div id="left4" class="background below">
+		<p>Website</p>
+	</div>
+	<div id="left3" class="left blue3 ">
+		<p class="left">Yo</p>
+	</div>
+	<div id="right3" class="right pink3 ">
+		<p class="right">ur</p>
+	</div>
+	<div id="left2" class="left blue2 ">
+		<p class="left">T</p>
+	</div>
+	<div id="right2" class="right pink2 ">
+		<p class="right">o</p>
+	</div>
+	<div id="left1" class="left blue1">
+		<!--<p class="left">Wel</p>-->
+		<img class="left" src="images/headphonesl.png">
+	</div>
+	<div id="right1" class="right pink1">
+		<!--<p >come</p>-->
+		<img class="right" src="images/headphonesr.png">
+	</div>
+	<script type="text/javascript">
+		let clickCount=0;
+
+		document.addEventListener("click", function(){doMouseClick(event)})
+		document.addEventListener("contextmenu", function(){doMouseClick(event)})
+
+		function doMouseClick(event){
+			let action = "add";
+
+			switch (event.button){
+			case 0:
+				clickCount++;
+				if (clickCount==5)
+					{clickCount=4}
+				
+				break
+			case 2:
+				event.preventDefault();
+				
+				action = "subtract";
+			}
+
+			let theLeftDIV1  = document.getElementById("left" + clickCount);
+			let theRightDIV1 = document.getElementById("right" + clickCount);
+			let theLeftDIV2  = document.getElementById("left" + parseInt(clickCount + 1));
+			let theRightDIV2 = document.getElementById("right" + parseInt(clickCount + 1));
+
+			if (action == "add"){
+				try{
+					theLeftDIV1.classList.add("fullLeft");
+					theRightDIV1.classList.add("fullRight");
+					if (clickCount==3)
+						{theLeftDIV2.classList.remove("below");
+					}
+				}
+			catch(e){}
+			}else
+			{	
+				try{
+					theLeftDIV1.classList.remove("fullLeft");
+					theRightDIV1.classList.remove("fullRight");
+					if (clickCount==3)
+						{theLeftDIV2.classList.add("below");
+					}
+				}
+				catch(e){}
+				clickCount--;
+				if (clickCount<0){clickCount=0}
+			}
+
+		}
+	</script>
+
+</body>
+</html>

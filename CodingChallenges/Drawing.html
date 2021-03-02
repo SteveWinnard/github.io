@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="Drawing.css">
+	<title>Drawing using JS</title>
+
+</head>
+<body>	
+	<canvas id="canvas" class="canvas" width="500" height="500"></canvas>
+	<script type="text/javascript">
+		const canvas = document.getElementById("canvas");
+		const ctx = canvas.getContext("2d");
+
+		let size = 30;
+		let x = 50;
+		let y = 50;
+		let xx;
+		let yy = 0;
+		let isPressed = false;
+
+		canvas.addEventListener("mouseup", (event) => {
+			if (isPressed){
+				size = Math.abs(xx - x);
+				drawCircle(x,y, size);
+			}
+			isPressed =false;
+			console.log("xx", xx);
+		})
+
+		canvas.addEventListener("mousedown", (event) => {
+			x = event.offsetX;
+			y = event.offsetY;
+
+			if (xx==0){xx=x}
+
+			isPressed = true;
+			console.log("xx", xx);
+		})
+
+		canvas.addEventListener("mousemove", (event) => {
+			if (isPressed){
+				xx = event.offsetX;
+				yy = event.offsetY;
+				size = Math.abs(xx - x);
+				draw(x, y, size);
+			}
+			else{xx=x};
+			console.log("xx", xx);
+		})
+
+		function drawCircle(x,y, size){
+			ctx.beginPath();
+			ctx.arc(x,y, size, 0, Math.PI * 2);
+			ctx.stroke();
+		}
+
+		
+
+		function draw(x, y, size){
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			drawCircle(x, y, size);
+			//requestAnimationFrame(draw);
+		}
+
+		//draw();
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Challenge 1</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+
+		body{
+			background: #1a4341;
+		}
+
+		div{
+			position:fixed;
+			left: 50%;
+			top: 50%;
+			width: 500px;
+			height: 200px;
+			border-radius: 100% 100% 100% 100%;
+		}
+
+		.inner {
+			transform: translate(-50%, -50%);
+			background: #fff;
+			/*box-shadow: 0 13px 0 rgba(0,0,0,.3);*/
+		}
+
+		.bottom{
+			transform: translate(-50%, -44%);
+			background: rgba(0,0,0,.4);
+		}
+		
+
+		.top{
+			transform: translate(-50%, -56%);
+			background: #000;
+		}
+
+	</style>
+</head>
+<body>
+	
+	<div class="top"></div>
+	<div class="bottom"></div>
+	<div class="inner"></div>
+	<div class="center"></div>
+</body>
+</html>

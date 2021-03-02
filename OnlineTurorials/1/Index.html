@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://kit.fontawesome.com/b95714529c.js" crossorigin="anonymous"></script>
+	<title>Teasers</title>
+	<link rel="stylesheet" type="text/css" href="responsive1.css">
+</head>
+<body>
+	<section>
+	<div class="header">
+		<div class="title left">HEROES</div>
+		<div class="menu right"><i class="clickable fas fa-bars"></i></div>
+			<!--<div class="menuitems right">
+				<span>One</span>
+				<span>Two</span>
+				<span>Three</span>
+				<span>Four</span>
+			</div>-->
+		<ul class="navigation">
+			<li><a href="#" style="--i:1;">Home</a></li>
+			<li><a href="#" style="--i:2;">Characters</a></li>
+			<li><a href="#" style="--i:3;">Games</a></li>
+			<li><a href="#" style="--i:4;">Movies</a></li>
+			<li><a href="#" style="--i:5;">More...</a></li>
+		</ul>
+	</div>
+	
+	<div class="container">
+		<div class="box" style="--i:3;">
+			<div class="imgBox clickable"><img src="Images/Vietnam1.jpg"></img></div>
+		</div>
+		<div class="box" style="--i:4;">
+			<div class="imgBox  clickable"><img src="Images/Australia1.jpg"></img></div>
+		</div>
+		<div class="box" style="--i:5;">
+			<div class="imgBox  clickable"><img src="Images/Bali1.jpg"></img></div>
+		</div>
+		<div class="box" style="--i:6;">
+			<div class="imgBox  clickable"><img src="Images/Vietnam2.jpg"></img></div>
+		</div>
+	</div>
+	<div class="footer">
+		<div class="sci">
+			<ul>
+			<li style="--i:9;"><i class="clickable fab fa-facebook-square" ></i></li>
+			<li style="--i:8;"><i class="clickable fab fa-instagram-square"></i></li>
+			<li style="--i:7;"><i class="clickable fab fa-twitter-square"></i></li>
+			</ul>
+		</div>
+	</div>
+	</section>
+	<script type="text/javascript">
+		let thePhotos	= document.querySelectorAll(".imgBox");
+		let theTitle 	= document.querySelector(".title");
+		let theMenu 	= document.querySelector(".menu");
+		let theSocials 	= document.querySelector(".socials");
+		let theMenuItems= document.querySelector(".navigation");
+
+		let imgBox = document.querySelectorAll(".imgBox");
+
+		/*setTimeout(function(){
+			thePhotos[3].classList.remove("left");
+		}, 250);
+
+		setTimeout(function(){
+			thePhotos[2].classList.remove("left");
+		}, 500);
+
+		setTimeout(function(){
+			thePhotos[1].classList.remove("left");
+		}, 750);
+
+		setTimeout(function(){
+			thePhotos[0].classList.remove("left");
+		}, 1000);*/
+
+		setTimeout(function(){
+			//theTitle.classList.remove("left");
+			//theMenu.classList.remove("right");
+			//theSocials.classList.remove("bottom");
+			theMenu.addEventListener('click', function(){
+				theMenuItems.classList.toggle("active");
+			});
+		}, 1250);
+
+		imgBox.forEach(popup => popup.addEventListener('click', () => {
+			//photo.classList.toggle("teaser");
+			popup.classList.toggle("active");
+		}))  
+
+	</script>
+</body>
+</html>

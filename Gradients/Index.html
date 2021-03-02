@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Gradients</title>
+</head>
+<body>
+	<style type="text/css">
+		body{
+			animation: sunrise ease;
+			animation-duration: 5s ;
+			animation-direction: forwards;
+		}
+
+		@keyframes sunrise {
+			0%{
+				background: rgb(244,214,124);
+				background: radial-gradient(circle, rgba(244,214,124,1) 0%, rgba(187,118,57,1) 52%, rgba(153,106,10,1) 100%);
+			}
+			100%{
+				background: rgb(255,248,192);
+				background: radial-gradient(circle, rgba(255,248,192,1) 0%, rgba(235,223,163,1) 71%, rgba(232,232,142,1) 100%);
+			}
+	</style>
+</body>
+</html>

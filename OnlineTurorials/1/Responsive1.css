@@ -1,0 +1,288 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+*{
+	margin:	0px;
+	padding: 0px;
+	font-size: 30px;
+	text-transform: uppercase;
+	font-weight: 400px;
+	font-family: poppins;
+	box-sizing: border-box;
+}
+
+body{
+	overflow: hidden;
+}
+
+
+.left {
+	transform: translateX(-50px);
+	opacity: 0;
+	transition: opacity .75s ;
+	animation-fill-mode: forwards;
+}
+
+.right {
+	transform: translateX(1000px);
+	opacity: 0;
+	transition: opacity .75s 
+}
+
+.bottom{
+	transform: translateY(1000px);
+	opacity: 0;
+	transition: opacity .75s 
+}
+
+.clickable{
+	cursor: pointer;
+}
+
+section {
+	padding: 100px;
+	height:100vh;
+}
+
+section .header{
+	position: absolute;
+	height:40px;
+	left:0;
+	top:0;
+	width:100%;
+	height:100px;
+	padding: 20px 100px;
+	display:flex;
+	justify-content: space-between;
+	align-items: center;
+	z-index:1000;
+}
+
+section .header .title{
+	position: relative;
+	transition-duration: .5s;
+	transition-timing-function: ease-in-out; 
+	letter-spacing: 2px;
+	opacity: 0;
+	animation: slideLeft 0.5s ease-in-out forwards;
+	animation-delay: .5s;
+
+
+}
+
+section .header .menu{
+	position: relative;
+	width:30px;
+	height:30px;
+	opacity: 0;
+	animation: slideRight 0.5s ease-in-out forwards;
+	animation-delay: .5s;
+	
+}
+
+section .header .menu.active{
+
+	
+}
+
+section .header .menu i{
+	position: absolute;
+	right:0px;
+	top:10px;
+	background: #fff;
+
+}
+
+.navigation{
+	position: absolute;
+	right: 150px;
+	transition: .5s;
+	display: flex;
+	opacity: 0;
+	visibility: hidden;
+}
+
+.navigation.active{
+
+	opacity: 1;
+	visibility: visible;
+
+}
+
+.navigation li {
+	list-style: none;
+}
+
+.navigation li a {
+	color: #333;
+	text-decoration: none;
+	font-size: 16px	;
+	margin:	0px 20px;
+	font-weight: 600;
+	display: inline-block;
+	opacity: 0;
+}
+
+.navigation.active li a {
+	animation: slideRight 0.5s ease-in-out forwards;
+	animation-delay: calc(0.2s * var(--i));
+}
+
+.container {
+	position:absolute;
+	display: flex;
+	height:calc(100% - 200px);
+	width:calc(100% - 200px);
+	z-index: 100;
+}
+
+.container .box{
+	position: relative;
+	width: 25%;
+	height:100%;
+	overflow: hidden;
+	border-right: 10px solid #fff;
+
+}
+
+.container .box:last-child{
+	border-right: none;
+}
+
+
+.container .box .imgBox{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	transition: .5s;
+	animation: slideRight 0.5s ease-in-out forwards;
+	animation-delay: calc(0.2s * var(--i));
+	opacity: 0;
+}
+
+.container .box .imgBox.active{
+	position: fixed;
+	top: 100px;
+	left: 100px;
+	width: calc(100% - 200px);
+	height: calc(100% - 200px);
+	z-index: 1000;
+	opacity: 1;
+}
+
+.container .box .imgBox img{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition:.5s;
+}
+
+.container .box .imgBox:hover img{
+	transform: scale(1.2);
+	
+}
+
+.container .box .imgBox.active:hover img{
+	transform: scale(1);
+}
+
+.footer{
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+	left:0;
+	padding:0 100px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+}
+
+.footer .sci{
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	
+}
+
+.footer .sci ul{
+	display: flex;
+}
+
+.footer .sci ul li{
+	list-style: none;
+	animation: slideLeft 0.5s ease-in-out forwards;
+	animation-delay: calc(0.2s * var(--i));
+	opacity: 0;
+	padding-right:10px;
+	font-size: 30px;
+}
+
+.footer .sci ul li a{
+	color: #111;
+	text-decoration: none;
+	font-weight: 500;
+	display: inline-block;
+	margin-right: 20px;
+
+
+}	
+
+.footer .sci ul li:last-child a{
+	margin-right: 0px;
+
+}	
+
+@keyframes slideRight {
+	0%{
+		transform: translateX(150px);
+		opacity: 0;
+	}
+	100%{
+		transform: translateX(0px);
+		opacity: 1;
+	}
+}
+
+@keyframes slideLeft {
+	0%{
+		transform: translateX(-150px);
+		opacity: 0;
+	}
+	100%{
+		transform: translateX(0px);
+		opacity: 1;
+	}
+}
+
+@media (max-width: 768px){
+	section{
+		padding: 80px 20px;
+	}
+
+	header{
+		padding: 10px 20px;
+		height:70px;
+	}
+
+	.navigation{
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: #fff;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.navigation.active li a{
+		margin: 5px 10px;
+		display: inline-block;
+	}
+}

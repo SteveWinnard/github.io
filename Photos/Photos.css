@@ -1,0 +1,709 @@
+*{
+			--mouse-x: "500px";
+			--mouse-y: "400px";
+		}
+
+		body{
+			margin:0;
+			padding:0;
+			font-family: sans-serif;
+			background: #000;
+		}
+
+		header{
+			padding: 10px 100px;
+			box-sizing: border-box;
+		}
+
+		section{
+			width: 100%;
+			height: 100vh;
+		}
+
+		section.sec1{
+			background: url(/images/Pancakes.jpg);
+			background-size: cover;
+		}
+
+		section.sec2{
+			padding: 10px;
+			box-sizing: border-box;
+			height: auto;
+			/*background: url(images/helicopter.jpg) fixed 100% ;
+			backdrop-filter: blur(10px);*/
+		}
+
+		section.heli{
+			background: url(/images/background1.jpg) fixed 100% ;
+			background-blend-mode: lighten; 
+		}
+
+		section.boats{
+			background: url(/images/background2.jpg) fixed 100% ;
+			background-blend-mode: lighten; 
+
+		}
+
+		section.beach{
+			background: url(/images/background3.jpg) fixed 100% ;
+			background-blend-mode: lighten; 
+
+		}
+
+		section.lanterns{
+			background: url(images/background4.jpg) fixed 100% ;
+			background-blend-mode: lighten; 
+
+		}
+
+		section.sec2 h2{
+			font-size: 2em;
+			margin: 0;
+			padding: 0 0 20px;
+			color: #FFF;
+		}
+
+		section.sec2 p{
+			font-size: 1.2em;
+			margin: 0;
+			padding: 0;
+			color: #FFF;
+
+		}
+
+		section.sec3{
+			background: url(/images/Towers.jpg);
+			background-size: cover;
+		}
+
+		section.sec4{
+			background: url(/images/Ship.jpg);
+			background-size: cover;
+		}
+
+		.invisible{
+
+			transition: transform .5s;
+			transform: translateX(100px);
+		}
+
+		nav{
+			position: sticky;
+			top:0px;
+			width: 100%;
+			height: 50px;
+			background: rgba(0,0,0,0.8);
+			border-top: 1px solid rgba(255,255,255,.2);
+			border-bottom: 1px solid rgba(255,255,255,.2);
+			border-top: 2px solid red;
+			opacity:1;
+			z-index:30;
+		}
+
+		nav ul{
+			display: flex;
+			margin: 0;
+			padding: 0 100px;
+			float: right;
+		}
+
+		nav ul li{
+			list-style: none;
+
+		}
+
+		nav ul li a{
+			text-decoration: none;
+			display: block;
+			color: #fff;
+			padding: 0 20px;
+			text-transform: uppercase;
+			font-family: sans-serif;
+			font-weight: bold;
+			line-height: 50px;
+		}
+		nav ul li a:hover,
+		nav ul li a.active{
+			background: #f00;
+
+		}
+
+		nav ul li a.section{
+			width:200px;
+			background: #000;
+
+		}
+
+		.content .image .img1{
+			background: url(/images/pancakes.jpg);
+		}
+
+		.content .image .img2{
+			background: url(/images/ship.jpg);
+		}
+
+		.content .image .img3{
+			background: url(/images/towers.jpg);
+		}
+
+		.content{
+			position: relative;
+			left:50%;
+			width:70%;
+			top:100px;
+			
+			height: 300px;
+			border:none;
+			transform: translate(-50%);
+			display: flex;
+			padding-bottom: 100px;
+		}
+
+		.content .image{
+			width:35%;
+			height:80%;
+			border: 1px solid #eee;
+			margin: -10px;
+			background: #fff;
+			position: relative;
+			box-shadow: 2px 2px 8px #333;
+			padding: 10px;
+			cursor: pointer;
+
+		}
+
+		.content .image div:first-child:hover{
+			transform: scale(1);
+			transition-duration: .5s;
+			filter:grayscale(0);
+
+
+		}
+
+		.content .image div:first-child{
+			position: relative;
+			width:100%;
+			height:100%;
+			background-size: cover;
+			background-color: #fff;
+			transition-duration: .5s;
+			filter:grayscale(1);
+
+		}
+
+
+		.blur{
+			position:fixed;
+			z-index: 40;
+			width:100%;
+			height:100%;
+			background-color:#333;
+		}
+		
+		@supports(opacity: 1){
+			.blur{
+				transition-duration: .5s;
+				opacity:1;
+				background-color:rgba(0,0,0,.7);
+
+			}
+
+			.blur .photoBox{
+				transform: translate(-50%, -50%);
+				box-shadow: 4px 4px 20px rgba(0,0,0,.7);
+				transition-duration: 1s;
+			}
+			.small{
+				/*height:0vh;
+				width:0vw;*/
+				animation: shrink;
+				animation-duration: .25s;
+				animation-fill-mode: forwards;
+			}
+
+			.full{
+				/*height:80vh;
+				width:80vw;*/
+				animation: grow;
+				animation-duration: .5s;
+				animation-fill-mode: forwards;
+				animation-timing-function: ease-in-out;
+
+			}
+
+			.blur .photoBox .photo{
+				transition: background .5s;
+				transition-duration: .5s;
+				overflow: hidden;
+				will-change: background;
+			}
+
+			.visible{
+				opacity: 0;
+				transition-duration: .5;
+				transform-style: opacity
+			}
+
+			.blur .photoBox .photo .description {
+				/*transform: translateY(50px);*/
+				opacity:0;
+				transition: opacity .5s;
+			}
+
+			.blur .photoBox .photo .close {
+				opacity:0;
+				transition: opacity .5s;
+			}
+		}
+
+		.blur .photoBox{
+			position:fixed;
+			left:50%;
+			top:50%;
+			
+			background:#fff;
+			padding:20px;
+			z-index: 50;
+			overflow:hidden;
+			
+
+		}
+
+		.keyPress{
+			animation: highlightKeyPress;
+			animation-duration: 1s;
+		}
+
+		@keyframes highlightKeyPress {
+			0%{
+
+			}
+
+			30%{
+				opacity: 1;
+				transform: scale(1.05);
+			}
+
+			100%{
+				opacity: .6;
+				transform: scale(1);
+			}
+
+		}
+
+		@keyframes showMore {
+			0%{
+
+			}
+
+			100%{
+				transition-duration: .5s;
+				transform: translateY(0);
+				}
+
+		}
+
+		@keyframes grow {
+			0%{
+				height:0vh;
+				width:0vw;
+			}
+			90%{
+				height:82vh;
+				width:82vw;
+			}
+			100%{
+				height:80vh;
+				width:80vw;
+			}
+
+		}
+
+		@keyframes shrink {
+			0%{
+				height:80vh;
+				width:80vw;
+			}
+			10%{
+				height:82vh;
+				width:82vw;
+			}
+			100%{
+				left: --mouse-x;
+				top: --mouse-y;
+				height:0vh;
+				width:0vw;
+			}
+
+		}
+
+		.blur .photoBox .photo{
+			position: relative;
+			width:100%;
+			height: 100%;
+			overflow: hidden;
+			
+		}	
+
+		.blur .photoBox .photo .description{
+			
+			width:100%;
+			height:100%;
+			background: rgba(255,255,255,.7);
+			position: absolute;
+			bottom:0px;
+			left:0px;
+			top:calc(100% - 40px);
+			z-index:99;
+
+		}
+
+		.blur .photoBox .photo .description .maindesc{
+			position: relative;
+			width:100%;
+			height:100%;
+			background: rgba(255,255,255,.7);
+			left:0px;
+			top:40px;
+			overflow: hidden;
+			padding:10px 40px 10px 10px;
+			font-size: 20px;
+			color:#333;
+
+		}
+
+		.blur .photoBox .photo .description p {
+			position: absolute;
+			left:5px;
+			font-weight:900;
+			font-size:30px;
+			top:-35px;
+			color: #fff;
+			filter: drop-shadow(0 0 2px rgba(0,0,0,.5));
+			
+		}
+
+		.blur .photoBox .photo .more {
+			position: absolute;
+			right: 5px;
+			font-weight:900;
+			font-size:40px;
+			top:-9px;
+			color: #fff;
+			cursor: pointer;
+			transition: transform .5s;
+			filter: drop-shadow(0 0 2px rgba(0,0,0,.5));
+		}
+
+		.rotate {
+			transition: transform .5s;
+			transform: 	rotate(180deg);
+		}
+
+		.blur .photoBox .photo .showmore{
+			animation: showMore;
+			animation-duration: .2s;
+			animation-fill-mode: forwards;
+			animation-timing-function: ease-in-out;
+
+		}
+
+		.blur .photoBox .photo .showless{
+			animation: showLess;
+			animation-duration: .2s;
+			animation-fill-mode: forwards;
+			animation-timing-function: ease-in-out;
+
+		}
+
+
+
+		@keyframes showMore {
+			0%{
+				transform: translateY(0) ;
+			}
+
+			100%{
+				transform: translateY(calc(-100% + 40px)) ;
+			}
+		}
+
+		@keyframes showLess {
+			0%{
+				transform: translateY(calc(-100% + 40px)) ;
+			}
+
+			100%{
+				transform: translateY(0) ;
+			}
+		}
+
+		.blur .photoBox .photo:hover .description{
+			transition: opacity .5s;
+			opacity: .9;
+
+		}
+
+		.blur .photoBox .photo:hover .arrow, .blur .photoBox .photo:hover .close{
+			transition: opacity .5s;
+			opacity: .6;
+		}
+
+		.blur .photoBox .photo:hover:before, .blur .photoBox .photo:hover:after {
+			transform: background .5;
+			background: rgba(0,0,0,.3);
+		}
+
+		.blur .photoBox .photo .arrow:hover, .blur .photoBox .photo .close:hover, .blur .photoBox .photo .more:hover{
+			transition: opacity .5s;
+			opacity: 1;
+		}
+
+		.blur .photoBox .photo .close {
+			position: absolute;
+			left: 2px;
+			font-weight:900;
+			font-size:40px;
+			top:-6px;
+			color: #fff;
+			z-index:80;
+			width:40px;
+			height: 40px;
+			cursor: pointer;
+			filter: drop-shadow(0 0 2px rgba(0,0,0,.5));
+			transition: transform opacity(1);
+			transition-duration: .5s;
+		}
+
+		.blur .photoBox .photo .close:before {
+			content:'';
+			position: absolute;
+			left: -2px;
+			top: 4px;
+			background: rgba(250,250,250, .5);
+			clip-path: circle(100% at 0 0%);
+			width:60px;
+			height: 60px;
+
+		}
+
+		.blur .photoBox .photo .arrow {
+			position: absolute;
+			font-weight:700;
+			color: #fff;
+			/*background: url(images/arrow.png);*/
+			z-index:81;
+			top:40%;	
+			opacity:0;
+			transition: opacity .5s;
+			cursor: pointer;
+			font-size: 50px;
+			filter: drop-shadow(0 0 2px rgba(0,0,0,.5));
+		}
+
+		.blur .photoBox .photo .arrow:active, .blur .photoBox .photo .close:active {
+			opacity:1;
+			transition: opacity .5s;
+
+		}
+
+		.blur .photoBox .photo .left {
+			left: -10px;
+		}
+
+		.blur .photoBox .photo .left:before {
+			content:'';
+			position: absolute;
+			width:40px;
+			height:48px;
+			background: #fff;
+			left: -10px;
+			top:3px;
+			clip-path: polygon(100% 0%, 50% 47%, 100% 100%, 25% 100%, 0% 50%, 25% 0%);
+		}
+
+		.blur .photoBox .photo .left:after {
+			content:'';
+			position: absolute;
+			width:120px;
+			height:120px;
+			background: rgba(250,250,250, .5);
+			left: 0px;
+			top:-53%;
+			clip-path: circle(50% at 0 50%);
+
+		}
+
+		.blur .photoBox .photo .right:after {
+			content:'';
+			position: absolute;
+			width:120px;
+			height:120px;
+			background: rgba(250,250,250, .5);
+			right: 0px;
+			top:-53%;
+			clip-path: circle(50% at 100% 50%);
+
+		}
+
+		.blur .photoBox .photo .right {
+			right: -10px;
+		}
+
+		.blur .photoBox .photo .right:before {
+			content:'';
+			position: absolute;
+			width:40px;
+			height:48px;
+			background: #fff;
+			right: -10px;
+			top:3px;
+			clip-path: polygon(75% 0%, 100% 50%, 75% 100%, 0% 100%, 61% 47%, 0% 0%);
+		}
+			
+			
+		
+
+		.blur .photoBox .photo .arrow:active {
+			font-weight:1200;
+		}
+
+		.block{
+			display:none;
+			
+		}
+
+		@media (max-width: 445px){
+			nav{
+				position: sticky;
+				top:0px;
+				width: 100%;
+				height: 20px;
+			}
+
+			nav ul{
+				padding: 0 10px;
+
+			}
+
+			nav ul li a{
+				padding: 0 2px;
+				line-height: 20px;
+			}
+
+			nav ul li a.section{
+				width:100px;
+
+			}
+
+			section.sec2 h2{
+				font-size: 2em;
+				margin: 0;
+				padding: 0 0 10px;
+				color: #FFF;
+			}
+
+			section.sec2 p{
+				font-size: .8em;
+				margin: 0;
+				padding: 0;
+				color: #FFF;
+
+			}
+
+			.blur .photoBox .photo .left {
+				left: -30px;
+				transform: rotate(180deg) scale(.3);
+
+			}
+
+			.blur .photoBox .photo .right {
+				right: -30px;
+				transform: scale(.3);
+				
+			}
+
+			.blur .photoBox .photo .close {
+				left: -10px;
+				top:-10px;
+				transform: scale(.5);
+			}
+
+			.blur .photoBox .photo .description{
+			
+				width:100%;
+				height:20px;
+				background: rgba(255,255,255,.7);
+				position: absolute;
+				bottom:0px;
+				left:0px;
+
+			}
+
+			.blur .photoBox .photo .description p {
+				position: absolute;
+				left:10px;
+				font-weight:900;
+				font-size:12px;
+				top:-11px;
+
+			}			
+		}
+
+		@media (max-width: 375px){
+			header{
+				padding: 5px 10px;
+				box-sizing: border-box;
+			}
+			.blur .photoBox{
+				padding:10px;
+			}
+
+			.content{
+				position: relative;
+				left:45%;
+				width:80%;
+				top:20px;
+				height: 400px;
+				border:none;
+				transform: translate(-50%);
+				display: flex;
+				flex-direction: column;
+				padding-bottom: 50px;
+			}
+
+			.content .image{
+				width:100%;
+				height:100%;
+				border: 1px solid #eee;
+				margin: -10px;
+				background: #fff;
+				position: relative;
+				box-shadow: 2px 2px 8px #333;
+				padding: 10px;
+				cursor: pointer;
+
+			}
+
+			.blur .photoBox .photo .description p {
+				position: absolute;
+				left:10px;
+				font-weight:900;
+				font-size:12px;
+				top:-11px;
+
+			}
+			
+			.blur .photoBox .photo .description{
+			
+				width:100%;
+				height:20px;
+				background: rgba(255,255,255,.7);
+				position: absolute;
+				bottom:0px;
+				left:0px;
+				transform: translateY(50px);
+				transition-duration: .5s;
+			}
+
+		}
